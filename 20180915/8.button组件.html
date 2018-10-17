@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">      
+        <Button1 :color="color" :size="size">{{value}}</Button1>
+    </div>
+    <script>
+        Vue.component("Button1",{
+            props:["color","size"],
+            template:`
+                <div class="app">
+                    <button class="btn" :class="['btn-'+color,
+                    {
+                        'btn-lg':size==='lg',
+                        'btn-sm':size==='sm',
+                        'btn-xs':size==='xs'
+                    }]">
+                        <slot></slot>
+                    </button>
+                </div>
+            `
+        });
+        const vm=new Vue({
+            el:"#app",
+            data:{
+                color:"danger",
+                size:"sm",
+                value:"按钮"
+            },
+            methods:{
+
+            }
+        });  
+    </script>
+</body>
+</html>

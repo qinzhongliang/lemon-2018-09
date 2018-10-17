@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <Banner :imgs="imgs" :w1="w1"></Banner>
+    </div>
+    <script>
+        Vue.component("Banner",{
+            props:["imgs","w1"],
+            template:`
+                <div class="app">
+                    <div>
+                        <img :src="item" v-for="(item,index) in imgs" 
+                        v-if="showIndex===index" 
+                        :width="w1" style="overflow:hidden">
+                        <button @click="prev">上一张</button>
+                        <button @click="next">下一张</button>
+                    </div>
+                </div>
+            `,
+            data(){
+                return{
+                    showIndex:0,
+                }
+            },
+            methods:{
+                next(){
+                    this.showIndex++;
+                    if(this.showIndex>this.imgs.length-1){
+                        this.showIndex=0;
+                    }
+                },
+                prev(){
+                    this.showIndex--;
+                    if(this.showIndex<0){
+                        this.showIndex=this.imgs.length-1;
+                    }
+                }
+            }
+        });
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                imgs:[
+                    "img/1.jpg",
+                    "img/2.jpg",
+                    "img/3.jpg",
+                    "img/4.jpg"
+                ],
+                w1:"100%",
+            },
+            methods:{
+                
+            }
+        });
+    </script>
+</body>
+</html>

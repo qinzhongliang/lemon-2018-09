@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>
+        #app,.app {
+            display: flex;
+            width: 700px;
+            justify-content: space-between;
+        }
+        #app .box,.app .box{
+            width: 300px;
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #000;
+        }
+        #app .btn,.app .btn{
+            flex:1;
+            background-color: red;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <Csk :arr1="arr1" :arr2="arr2" @moveright="moveRight" @moveleft="moveLeft"></Csk>
+    </div>
+    <script>
+        Vue.component("Csk",{
+            props:["arr1","arr2"],
+            template:`
+                <div class="app">
+                    <div class="box">
+                        <div v-for="(item,index) in arr1">
+                            <input v-model="item.isChecked" type="checkbox">{{item.value}}
+                        </div>
+                    </div>
+                    <div class="btn">
+                        <button @click="moveLeft" :disabled="cptArr2.length===0"><<</button>
+                        <button @click="moveRight" :disabled="cptArr1.length===0">>></button>
+                    </div>
+                    <div class="box">
+                        <div v-for="(item,index) in arr2">
+                            <input v-model="item.isChecked" type="checkbox">{{item.value}}
+                        </div>
+                    </div>
+                </div>
+            `,
+            data(){
+                return{
+                    
+                }
+            },
+            methods:{
+                moveRight(){
+                    //保留截取出来的数据
+                    const origin=JSON.parse(JSON.stringify(this.cptArr1));
+                    //获取没有勾选上的选项  保存起来
+                    this.$emit("moveright");
+                    //this.arr2.push(...origin);
+                    origin.forEach(k => {
+                        k.isChecked=false;
+                        this.arr2.push(k);
+                    });
+                },
+                moveLeft(){
+                    //保留截取出来的数据
+                    const origin=JSON.parse(JSON.stringify(this.cptArr2));
+                    //获取没有勾选上的选项  保存起来
+                    this.$emit("moveleft");
+                    //this.arr2.push(...origin);
+                    origin.forEach(k => {
+                        k.isChecked=false;
+                        this.arr1.push(k);
+                    });
+                }
+            },
+            computed:{
+                cptArr1(){
+                    return this.arr1.filter(k=>{
+                        return k.isChecked;
+                    });
+                },
+                cptArr2(){
+                    return this.arr2.filter(k=>{
+                        return k.isChecked;
+                    });
+                },
+            }
+        });
+        let vm=new Vue({
+            el:"#app",
+            data:{
+                arr1:[
+                        {
+                            value:1,
+                            isChecked:false
+                        },{
+                            value:2,
+                            isChecked:false
+                        },{
+                            value:3,
+                            isChecked:false
+                        },{
+                            value:4,
+                            isChecked:false
+                        },{
+                            value:5,
+                            isChecked:false
+                        }
+                    ],
+                    arr2:[
+                        {
+                            value:6,
+                            isChecked:false
+                        },{
+                            value:7,
+                            isChecked:false
+                        },{
+                            value:8,
+                            isChecked:false
+                        },{
+                            value:9,
+                            isChecked:false
+                        },{
+                            value:10,
+                            isChecked:false
+                        }
+                    ],
+            },
+            methods:{
+                moveRight(){
+                    this.arr1=this.arr1.filter(k=>{
+                        return k.isChecked===false;
+                    });
+                },
+                moveLeft(){
+                    this.arr2=this.arr2.filter(k=>{
+                        return k.isChecked===false;
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

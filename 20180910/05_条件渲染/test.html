@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 如果需要频繁切换 v-show 较好 -->
+    <!-- 当条件不成立时, v-if 的所有子节点不会解析(项目中使用) -->
+    <div id="app">
+        <p v-if="ok">成功了</p>
+        <p v-else>失败了</p>
+        
+        <p v-show="ok">表白成功</p>
+        <p v-show="!ok">表白失败</p>
+
+        <button @click="ok=!ok">切换</button>
+    </div>
+    <script>
+        const vm=new Vue({
+            el:"#app",
+            data:{
+                ok:true
+            },
+        });
+    </script>
+</body>
+</html>
