@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>
+        .swicher{
+            width: 42px;
+            height: 20px;
+            background: #ccc;
+            border-radius: 11px;
+            cursor: pointer;
+            padding: 1px;
+            transition: background 0.5s linear;
+            display: inline-block;
+        }
+        .swicher.on{
+            background: orangered;
+        }
+        .swicher .btn{
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: transform 0.2s linear;
+        }
+        .swicher.on .btn{
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transform: translateX(22px);
+        }
+        .swicher.lg{
+            width: 60px;
+            height: 26px;
+            border-radius: 14px; 
+        }
+        .swicher.lg .btn{
+            width: 26px;
+            height: 26px;
+            border-radius: 13px;
+            background: #fff;
+            transition: transform 0.2s linear;
+        }
+        .swicher.on.lg .btn{
+            width: 26px;
+            height: 26px;
+            border-radius: 13px;
+            transform: translateX(34px);
+        }
+        .swicher.sm{
+            width: 38px;
+            height: 16px;
+            border-radius: 9px; 
+        }
+        .swicher.sm .btn{
+            width: 16px;
+            height: 16px;
+            border-radius: 8px;
+            background: #fff;
+            transition: transform 0.2s linear;
+        }
+        .swicher.on.sm .btn{
+            width: 16px;
+            height: 16px;
+            border-radius: 8px;
+            transform: translateX(22px);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+        Vue.component("Swicher",{
+            props:{
+                value:Boolean,
+                size2:String
+            },
+            methods:{
+                toggle(){
+                    this.$emit("change");
+                }
+            },
+            template:`
+                <div class="swicher" 
+                    :class="[{on:value},{
+                        'lg':size2==='large',
+                        'sm':size2==='small'
+                    }]" 
+                    @click="toggle">
+                    <div class="btn"></div>
+                </div>
+            `
+        });
+
+        const vm=new Vue({
+            el:"#app",
+            data:{
+                value:false,
+                size1:"small"
+            },
+            methods:{
+                change(){
+                    this.value=!this.value;
+                }
+            },
+            template:`
+                <div class="app">
+                    <input type="checkbox" v-model="value">   
+                    <Swicher @change="change" :value="value" :size2="size1"></Swicher>
+                    <Swicher @change="change" :value="value"></Swicher>
+                    <Swicher @change="change" :value="value" size2="large"></Swicher>
+                </div>
+            `
+        });
+    </script>
+</body>
+</html>
