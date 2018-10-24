@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        /* 显示/隐藏的过滤效果 */
+        .xxx-enter-active,.xxx-leave-active{
+            /* transition:过渡效果：过渡时改变哪个元素，持续多长时间 */
+            transition: opacity 1s;
+        }
+        .xxx-enter,.xxx-leave-to{
+            opacity:0;
+        }
+        .xxx-enter-to,.xxx-leave{
+            opacity:1;
+        }
+
+        /* 显示的过滤效果 */
+        .yyy-enter-active{
+            transition: all 1s;
+        }
+        /* 隐藏的过滤效果 */
+        .yyy-leave-active{
+            transition: all 3s;
+        }
+        .yyy-enter,.yyy-leave-to{
+            opacity:0;
+            transform: translateX(20px)
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="isShow=!isShow">toggle</button>
+        <transition name="xxx">
+            <p v-show="isShow">hello</p>
+        </transition>     
+    </div>
+
+    <div id="app1">
+        <button @click="isShow=!isShow">toggle</button>
+        <transition name="yyy">
+            <p v-show="isShow">hello</p>
+        </transition>     
+    </div>
+
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                isShow:true
+            }
+        });
+
+        new Vue({
+            el:"#app1",
+            data:{
+                isShow:true
+            }
+        });
+    </script>
+</body>
+</html>

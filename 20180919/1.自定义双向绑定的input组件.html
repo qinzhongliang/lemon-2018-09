@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>
+        .container{
+            box-sizing: border-box;
+            width: 200px;
+            height: 30px;
+            border:1px solid red;
+            display: flex;
+            line-height: 30px;  
+        }
+        .container input{
+            width: 140px;
+            display: flex;
+            flex:1;  
+        }
+        #app>span.before{
+            height: 20px;
+            margin: 3px 0 0 3px;
+            overflow: hidden;
+        }
+        #app>span.after{
+            height: 20px;
+            margin: 3px 3px 0 0;
+            overflow: hidden;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="app">
+            <Input1 v-model="title">
+                <span slot="before">
+                    <img style="width:20px;" src="img/jt.png" />
+                </span>
+                <span slot="after">
+                    <img style="width:20px;" src="img/jt.png" />
+                </span>
+            </Input1>
+            <Input1 v-model="title">
+                <span slot="before">
+                    <img style="width:20px;" src="img/jt.png" />
+                </span>
+            </Input1>
+            <Input1 v-model="title">
+                <span slot="after">
+                    <img style="width:20px;" src="img/jt.png" />
+                </span>
+            </Input1>
+            <Input1 v-model="title"></Input1>
+    </div>
+    <script>
+        Vue.component("Input1",{
+            model:{
+                prop:"value",
+                event:"input"
+            },
+            props:{
+                value:String
+            },
+            template:`
+                <div class="container">
+                    <span class="before">
+                        <slot name="before"></slot>
+                    </span>
+                    <input type="text" v-bind:value="value" v-on:input="$emit('input',$event.target.value)">
+                    <span class="after">
+                        <slot name="after"></slot>
+                    </span>
+                </div>   
+            `
+        });
+        const vm=new Vue({
+            el:"#app",
+            data:{
+                title:"",
+            },
+        });
+    </script>
+</body>
+</html>

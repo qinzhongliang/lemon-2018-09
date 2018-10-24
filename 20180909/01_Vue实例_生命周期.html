@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="app">
-        <button>destroy vm</button>
+        <button @click="destoryVM">destroy vm</button>
         <p v-show="isShow">bjlemon</p>
     </div>
     <script>
@@ -18,10 +18,20 @@
             data:{
                 isShow:true
             },
+            methods:{
+                destoryVM(){
+                    //干掉vm
+                    this.$destroy();
+                }
+            },
             mounted() {//初始化显示之后立即调用
-                setInterval(()=>{
+                this.intervalId=setInterval(()=>{
                     this.isShow=!this.isShow;
                 },1000);        
+            },
+            beforeDestroy() {
+                //清除定时器
+                clearInterval(this.intervalId);
             },
         });
         
